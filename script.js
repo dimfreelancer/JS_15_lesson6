@@ -22,82 +22,90 @@
 
 console.log('Hello this is the Gaming guess the number bot');
 
-const userAnswer = () => {
 
-    let result = prompt('Угадайте число от 1 до 100');
+// const userAnswer = () => {
 
-    console.log(result, 'typeof', typeof(result));
-    return result;
-}
+//     let result = prompt('Угадайте число от 1 до 100');
+
+//     console.log(result, 'typeof', typeof(result));
+//     return result;
+// }
+
+// console.log('num', userAnswer());
+
 
 var i = 10;
-/* 
-function one(a) {
-
-        console.log('i', i--, ' a ->', a);
-        if (i <= 0 || a > 1000) {
-            return 0;
-
-        } else {
-
-            one(a *= 2);
-        }
-    }
-one(555);
- */
 
 const randomInteger = () => {
     const MIN = 1;
     const MAX = 100;
 
     return Math.floor((100 * Math.random()) + 1);
-}
+};
 
-// const main = (seed) => {
 
-//     return () => {
-//         console.log('Угадайте число от 1 до 100');
+    // const next = (seed) => {
+    //     console.log('Угадайте число от 1 до 100');
 
-//         // let ans = randomInteger();
-//         let ans = +prompt('Угадайте число от 1 до 100');
-//         if ( seed < ans ) {
-//             console.log('Загаданное число меньше');
-//         } else if (seed > ans) {
-//             console.log('Загаданное число БОЛЬШЕ');
-//         } else {
-//             console.log('Поздравляю, Вы угадали УРААААА!!!!');
-//             return 0;
-//         }
-        
-//     }
-// }
+    //     // let ans = randomInteger();
+    //     let ans = prompt('Угадайте число от 1 до 100');
+    //     if (ans === null) {
+    //         console.log('Вы нажали отмена');
+    //         return;
+    //     }
+    //     ans = parseInt(ans);
+
+    //     if (isNaN(ans)) {
+    //         console.log('Ошибка! Вы ввели строку!!! введите целое число');
+    //     } else if (seed < ans) {
+    //         console.log('Загаданное число меньше');
+    //     } else if (seed > ans) {
+    //         console.log('Загаданное число БОЛЬШЕ');
+    //     } else if (seed === ans ) {
+    //         console.log('Поздравляю, Вы угадали УРААААА!!!!');
+    //         return;
+    //     }
+    //     next(seed);
+    // };
+
 
 
 
 const main = (seed) => {
-    console.log('seed: ', seed);
 
     const next = () => {
         console.log('Угадайте число от 1 до 100');
 
         // let ans = randomInteger();
-        let ans = userAnswer();
-        // let ans = +prompt('Угадайте число от 1 до 100');
-        if (seed < ans) {
+        let ans = prompt('Угадайте число от 1 до 100');
+        console.log('ans: ', ans);
+        if (ans === null) {
+            console.log('Вы нажали отмена');
+            return;
+        }
+        ans = parseInt(ans);
+
+        if (isNaN(ans)) {
+            console.log('Ошибка! Вы ввели строку!!! введите целое число');
+        } else if (seed < ans) {
             console.log('Загаданное число меньше');
         } else if (seed > ans) {
             console.log('Загаданное число БОЛЬШЕ');
-        } else {
+        } else if (seed === ans ) {
             console.log('Поздравляю, Вы угадали УРААААА!!!!');
-            return 0;
+            return;
         }
-        console.log('Вы не угадали угадайте еще раз');
-        alert('Вы не угадали угадайте еще раз');
-        next();
+
+        next();//следующий запуск итеррации рекурсии
     };
+
+    //возвращает функцию для замыкания
     return next;
-}
+};
 
 
+
+
+//генерация замыкания в функции
 const play = main(randomInteger());
-play();
+play();//по сути наша функция next()
