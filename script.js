@@ -19,93 +19,143 @@
 Программа должны быть выполнена с помощью рекурсии, без единого цикла.
 Загаданное число должно храниться «в замыкании»
 */
+/*
+УСЛОЖНЕННОЕ ЗАДАНИЕ: 
 
-console.log('Hello this is the Gaming guess the number bot');
+Дописать функционал игрового бота.
+
+Кол-во попыток пользователя должно быть ограничено: 10
+— если пользовательское число больше, то бот выводит "Загаданное число меньше, осталось попыток ..." и предлагает ввести новый вариант;
+— если пользовательское число меньше, то бот выводит "Загаданное число больше, осталось попыток ..." и предлагает ввести новый вариант;
+— если пользователь вводит правильное число, то бот выводит "Поздравляю, Вы угадали!!! Хотели бы сыграть еще?", при нажатии ОК игра перезапускается (снова 10 попыток и новое загаданное число)
+— если пользователь ввел не число, то выводит сообщение "Введи число!" и предлагает ввести новый вариант;
+— если пользователь нажимает "Отмена", то игра выводит прощальное сообщение и завершается.
+— если закончились попытки то программа сообщает: "Попытки закончились, хотите сыграть еще?"
+
+Программа должны быть выполнена с помощью рекурсии, без единого цикла.
+Загаданное число и оставшиеся кол-во попыток должно храниться «в замыкании»
+*/
 
 
-// const userAnswer = () => {
+const consoleAlert = (str) => {
+    console.log(str);
+    alert(str);
+}
 
-//     let result = prompt('Угадайте число от 1 до 100');
+const consolePrompt = (str) => {
+    console.log(str);
+    return prompt(str);
+}
 
-//     console.log(result, 'typeof', typeof(result));
-//     return result;
-// }
-
-// console.log('num', userAnswer());
-
-
-var i = 10;
+// let isNumber = (n) => !isNaN(parseFloat(n)) && isFinite(n);
+//варианты функции
+var isNumber = function isNumber(value) {
+   return typeof value === 'number' && isFinite(value);
+}
 
 const randomInteger = () => {
     const MIN = 1;
     const MAX = 100;
-
-    return Math.floor((100 * Math.random()) + 1);
+    let result = Math.floor((MAX * Math.random()) + MIN);
+    // console.log('debug result: ', result);
+    return result;
 };
 
-
-    // const next = (seed) => {
-    //     console.log('Угадайте число от 1 до 100');
-
-    //     // let ans = randomInteger();
-    //     let ans = prompt('Угадайте число от 1 до 100');
-    //     if (ans === null) {
-    //         console.log('Вы нажали отмена');
-    //         return;
-    //     }
-    //     ans = parseInt(ans);
-
-    //     if (isNaN(ans)) {
-    //         console.log('Ошибка! Вы ввели строку!!! введите целое число');
-    //     } else if (seed < ans) {
-    //         console.log('Загаданное число меньше');
-    //     } else if (seed > ans) {
-    //         console.log('Загаданное число БОЛЬШЕ');
-    //     } else if (seed === ans ) {
-    //         console.log('Поздравляю, Вы угадали УРААААА!!!!');
-    //         return;
-    //     }
-    //     next(seed);
-    // };
+// var i = 10;
+// const randomInteger = () => {
+//     const MIN = 1;
+//     const MAX = 100;
+//     return Math.floor((100 * Math.random()) + 1);
+// };
 
 
 
 
-const main = (seed) => {
+
+
+// const main = (seed) => {
+
+//     const next = () => {
+//         console.log('Угадайте число от 1 до 100');
+
+//         // let ans = randomInteger();
+//         let ans = prompt('Угадайте число от 1 до 100');
+//         console.log('ans: ', ans);
+//         if (ans === null) {
+//             console.log('Вы нажали отмена');
+//             return;
+//         }
+//         ans = parseInt(ans);
+
+//         if (isNaN(ans)) {
+//             console.log('Ошибка! Вы ввели строку!!! введите целое число');
+//         } else if (seed < ans) {
+//             console.log('Загаданное число меньше');
+//         } else if (seed > ans) {
+//             console.log('Загаданное число БОЛЬШЕ');
+//         } else if (seed === ans ) {
+//             console.log('Поздравляю, Вы угадали УРААААА!!!!');
+//             return;
+//         }
+
+//         next();//следующий запуск итеррации рекурсии
+//     };
+
+//     //возвращает функцию для замыкания
+//     return next;
+// };
+
+
+
+
+
+
+
+const main = () => {
+
+    const seed = randomInteger(); //генерим загаданое число - это сохранится в замыкании функции
+    let i = 10; //количество попыток храним в замыкании
 
     const next = () => {
-        console.log('Угадайте число от 1 до 100');
+        
+        // console.log('Угадайте число от 1 до 100');
+        // let ans = prompt('Угадайте число от 1 до 100'); //Ответ пользователя
 
-        // let ans = randomInteger();
-        let ans = prompt('Угадайте число от 1 до 100');
-        console.log('ans: ', ans);
+        let ans = consolePrompt('Угадай число от 1 до 100');
+
+        console.log('Ответ пользователя: ', ans);
+
         if (ans === null) {
-            console.log('Вы нажали отмена');
-            return;
-        }
+            consoleAlert('Вы нажали отмена\nКонец игры');
+            return; //выход из функции по Escape
+        };
         ans = parseInt(ans);
 
         if (isNaN(ans)) {
-            console.log('Ошибка! Вы ввели строку!!! введите целое число');
+            //проверка на корректость ввода данных
+            consoleAlert('Ошибка! Вы ввели строку!!! введите целое число');
         } else if (seed < ans) {
-            console.log('Загаданное число меньше');
+            consoleAlert('Загаданное число меньше << ' + ans);
         } else if (seed > ans) {
-            console.log('Загаданное число БОЛЬШЕ');
+            // console.log('Загаданное число БОЛЬШЕ >>');
+            // alert('Загаданное число БОЛЬШЕ >>');
+            consoleAlert('Загаданное число БОЛЬШЕ >> ' + ans);
         } else if (seed === ans ) {
-            console.log('Поздравляю, Вы угадали УРААААА!!!!');
-            return;
-        }
-
-        next();//следующий запуск итеррации рекурсии
+            consoleAlert('Поздравляю, Вы угадали УРААААА!!!!\n' 
+                    + 'Загаданное число ' + ans);
+            return; //выход из функции
+        };
+        consoleAlert('У вас осталось ' + --i + ' попыток чтобы угадать');
+        next(); //следующий запуск итеррации рекурсии
     };
 
-    //возвращает функцию для замыкания
-    return next;
+    return next; //возвращаем ссылку на функцию в замыкании
 };
 
 
 
-
-//генерация замыкания в функции
-const play = main(randomInteger());
-play();//по сути наша функция next()
+// //генерация замыкания в функции
+// const play = main(randomInteger());
+// play();//по сути наша функция next()
+const play = main(); //генерация замыкания в функции
+play(); //по сути наша функция next()
