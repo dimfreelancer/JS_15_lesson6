@@ -2,6 +2,8 @@
 
 /*
 Урок №6
+This is the Gaming guess the number bot
+
 Функции, область видимости и замыкание
 ОБЯЗАТЕЛЬНОЕ ЗАДАНИЕ:
 Это задание выполняется отдельно от нашего проекта с бюджетом!
@@ -20,129 +22,64 @@
 Загаданное число должно храниться «в замыкании»
 */
 
-console.log('Hello this is the Gaming guess the number bot');
-
-/* 
-const userAnswer = () => {
-    let result = prompt('Угадайте число от 1 до 100');
-    console.log(result, 'typeof', typeof(result));
-    return result;
+const consoleAlert = (str) => {
+    console.log(str);
+    alert(str);
 }
-console.log('num', userAnswer());
- */
+
+const consolePrompt = (str) => {
+    console.log(str);
+    return prompt(str);
+}
 
 const randomInteger = () => {
     const MIN = 1;
     const MAX = 100;
     let result = Math.floor((100 * Math.random()) + 1);
-    console.log('result: ', result);
+    console.log('debug result: ', result);
     return result;
 };
-
-    // const next = (seed) => {
-    //     console.log('Угадайте число от 1 до 100');
-
-    //     // let ans = randomInteger();
-    //     let ans = prompt('Угадайте число от 1 до 100');
-    //     if (ans === null) {
-    //         console.log('Вы нажали отмена');
-    //         return;
-    //     }
-    //     ans = parseInt(ans);
-
-    //     if (isNaN(ans)) {
-    //         console.log('Ошибка! Вы ввели строку!!! введите целое число');
-    //     } else if (seed < ans) {
-    //         console.log('Загаданное число меньше');
-    //     } else if (seed > ans) {
-    //         console.log('Загаданное число БОЛЬШЕ');
-    //     } else if (seed === ans ) {
-    //         console.log('Поздравляю, Вы угадали УРААААА!!!!');
-    //         return;
-    //     }
-    //     next(seed);
-    // };
-
-
-
-/**
-const main = (seed) => {
-
-    const next = () => {
-        console.log('Угадайте число от 1 до 100');
-
-        // let ans = randomInteger();
-        let ans = prompt('Угадайте число от 1 до 100');
-        console.log('ans: ', ans);
-        if (ans === null) {
-            console.log('Вы нажали отмена');
-            return;
-        }
-        ans = parseInt(ans);
-
-        if (isNaN(ans)) {
-            console.log('Ошибка! Вы ввели строку!!! введите целое число');
-        } else if (seed < ans) {
-            console.log('Загаданное число меньше');
-        } else if (seed > ans) {
-            console.log('Загаданное число БОЛЬШЕ');
-        } else if (seed === ans ) {
-            console.log('Поздравляю, Вы угадали УРААААА!!!!');
-            return;
-        }
-
-        next();//следующий запуск итеррации рекурсии
-    };
-
-    //возвращает функцию для замыкания
-    return next;
-};
-*/
-
-
 
 
 const main = () => {
 
-    let seed = randomInteger(); //генерим загаданое число
+    const seed = randomInteger(); //генерим загаданое число - это сохранится в замыкании функции
 
     const next = () => {
         
-        console.log('Угадайте число от 1 до 100');
-        let ans = prompt('Угадайте число от 1 до 100'); //Ответ пользователя
+        // console.log('Угадайте число от 1 до 100');
+        // let ans = prompt('Угадайте число от 1 до 100'); //Ответ пользователя
+
+        let ans = consolePrompt('Угадайте число от 1 до 100');
+
         console.log('Ответ пользователя: ', ans);
 
         if (ans === null) {
-            console.log('Вы нажали отмена\nКонец игры');
-            alert('Вы нажали отмена\nКонец игры');
-            return;
-        }
+            consoleAlert('Вы нажали отмена\nКонец игры');
+            return; //выход из функции по Escape
+        };
         ans = parseInt(ans);
 
         if (isNaN(ans)) {
-            console.log('Ошибка! Вы ввели строку!!! введите целое число');
-            alert('Ошибка! Вы ввели строку!!! введите целое число');
+            //проверка на корректость ввода данных
+            consoleAlert('Ошибка! Вы ввели строку!!! введите целое число');
         } else if (seed < ans) {
-            console.log('Загаданное число меньше <<');
-            alert('Загаданное число меньше <<');
+            consoleAlert('Загаданное число меньше << чем ' + ans);
         } else if (seed > ans) {
-            console.log('Загаданное число БОЛЬШЕ >>');
-            alert('Загаданное число БОЛЬШЕ >>');
+            // console.log('Загаданное число БОЛЬШЕ >>');
+            // alert('Загаданное число БОЛЬШЕ >>');
+            consoleAlert('Загаданное число БОЛЬШЕ >> чем ' + ans);
         } else if (seed === ans ) {
-            console.log('Поздравляю, Вы угадали УРААААА!!!!');
-            alert('Поздравляю, Вы угадали УРААААА!!!!');
+            consoleAlert('Поздравляю, Вы угадали УРААААА!!!!\nЗагаданное число ' + ans);
             return;//выход из функции
-        }
+        };
         next(); //следующий запуск итеррации рекурсии
     };
 
-    return next;
+    return next; //возвращаем ссылку на функцию в замыкании
 };
 
 
-
-
-//генерация замыкания в функции
-const play = main();
-play();//по сути наша функция next()
+const play = main(); //генерация замыкания в функции
+play(); //по сути наша функция next()
 
